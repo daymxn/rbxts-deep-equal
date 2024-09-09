@@ -29,9 +29,8 @@
 		"roblox",
 		"roblox-ts",
 		"typescript",
-		"logging",
-		"context",
-		"server-side"
+		"comparator",
+		"validation"
 	],
 	"author": "Daymon Littrell-Reyes",
 	"repository": "daymxn/rbxts-deep-equal",
