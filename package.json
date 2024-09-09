@@ -1,0 +1,79 @@
+{
+	"name": "@rbxts/deep-equal",
+	"version": "0.8.0",
+	"description": "Recursive comparator for ROBLOX projects.",
+	"main": "out/init.lua",
+	"scripts": {
+		"build": "rbxtsc",
+		"dev": "rbxtsc -w --type game --rojo test.project.json",
+		"watch": "rbxtsc -w",
+		"api:build": "npm run build",
+		"api:extract": "api-extractor run --local --verbose",
+		"api:update": "npx run-s api:build api:extract",
+		"api": "npx api:update",
+		"format": "npx eslint --fix",
+		"lint": "npm run format",
+		"lock": "npm i --package-lock-only",
+		"change": "npx changeset add",
+		"change:status": "npx changeset status",
+		"change:export": "npx changeset status --output changes.json",
+		"change:publish": "npx changeset publish",
+		"release:version": "npx changeset version",
+		"release:tags": "git push --follow-tags",
+		"release": "npx run-s build change:publish",
+		"prepublishOnly": "npm run build"
+	},
+	"keywords": [
+		"deep-equal",
+		"rbxts",
+		"roblox",
+		"roblox-ts",
+		"typescript",
+		"logging",
+		"context",
+		"server-side"
+	],
+	"author": "Daymon Littrell-Reyes",
+	"repository": "daymxn/rbxts-deep-equal",
+	"bugs": {
+		"url": "https://github.com/daymxn/rbxts-deep-equal/issues"
+	},
+	"license": "Apache-2.0",
+	"types": "out/index.d.ts",
+	"files": [
+		"out",
+		"!**/tests/**",
+		"!**/*.tsbuildinfo",
+		"!**/*.spec.lua",
+		"!**/*.spec.d.ts"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.27.7",
+		"@rbxts/compiler-types": "^2.3.0-types.1",
+		"@rbxts/testez": "https://github.com/daymxn/testez#patch-1",
+		"@rbxts/types": "^1.0.795",
+		"@types/fs-extra": "^11.0.4",
+		"@types/node": "^22.5.0",
+		"@typescript-eslint/eslint-plugin": "^7.1.1",
+		"@typescript-eslint/parser": "^7.1.1",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-headers": "^1.1.2",
+		"eslint-plugin-prettier": "^5.1.3",
+		"eslint-plugin-roblox-ts": "^0.0.36",
+		"npm-run-all2": "^6.2.2",
+		"prettier": "^3.2.5",
+		"prettier-plugin-organize-imports": "^3.2.4",
+		"roblox-ts": "^2.3.0-next",
+		"typescript": "^5.4.2"
+	},
+	"dependencies": {
+		"@rbxts/object-utils": "^1.0.4",
+		"@rbxts/rust-classes": "^0.12.0",
+		"@rbxts/services": "^1.5.4",
+		"@rbxts/t": "^3.1.1"
+	}
+}
