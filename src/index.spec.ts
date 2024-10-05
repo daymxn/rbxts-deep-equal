@@ -380,19 +380,19 @@ export = () => {
     });
 
     describe("arrays", () => {
-      it("should pass on left missing", () => {
-        const result = deepEqual([1, 2], [1, 2, 3]);
+      it("should pass on right missing", () => {
+        const result = deepEqual([1, 2, 3], [1, 2]);
         expect(result).to.never.be.ok();
       });
 
-      it("should still fail on right missing", () => {
-        const result = deepEqual([1, 2, 3], [1, 2]);
+      it("should still fail on left missing", () => {
+        const result = deepEqual([1, 2], [1, 2, 3]);
         expect(result).to.be.ok();
         assert(result);
 
         expect(FailureType[result.failType]).to.equal("MISSING_ARRAY_VALUE");
-        expect(encode(result.rightMissing)).to.equal("[3]");
-        expect(result.leftMissing.isEmpty()).to.equal(true);
+        expect(encode(result.leftMissing)).to.equal("[3]");
+        expect(result.rightMissing.isEmpty()).to.equal(true);
       });
     });
 
@@ -433,6 +433,48 @@ export = () => {
         expect(result.rightValue).to.equal("Civic");
         expect(result.leftValue).to.equal(undefined);
         expect(result.path).to.equal("car");
+      });
+
+      it("should still fail on nested left missing", () => {
+        const result = deepEqual(
+          {
+            child: {
+              name: "daymon",
+            },
+            age: 100,
+          },
+          {
+            name: "daymon",
+          }
+        );
+
+        expect(result).to.be.ok();
+        assert(result);
+
+        expect(FailureType[result.failType]).to.equal("MISSING");
+        expect(result.rightValue).to.equal("daymon");
+        expect(result.leftValue).to.equal(undefined);
+        expect(result.path).to.equal("name");
+      });
+
+      it("should still fail on different values", () => {
+        const result = deepEqual(
+          {
+            name: "bryan",
+            age: 100,
+          },
+          {
+            name: "daymon",
+          }
+        );
+
+        expect(result).to.be.ok();
+        assert(result);
+
+        expect(FailureType[result.failType]).to.equal("DIFFERENT_VALUES");
+        expect(result.rightValue).to.equal("daymon");
+        expect(result.leftValue).to.equal("bryan");
+        expect(result.path).to.equal("name");
       });
     });
   });

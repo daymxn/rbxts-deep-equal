@@ -128,8 +128,8 @@ export function deepEqualNested(
         });
       }
     } else {
-      const rightMissing = findMissingElements(config, path, left, right);
-      const leftMissing = config.checkRightMissing ? findMissingElements(config, path, right, left) : [];
+      const rightMissing = config.checkRightMissing ? findMissingElements(config, path, left, right) : [];
+      const leftMissing = findMissingElements(config, path, right, left);
 
       if (leftMissing.isEmpty() && rightMissing.isEmpty()) return Option.none();
 
@@ -169,13 +169,12 @@ export function deepEqualNested(
       }
     }
 
-    if (!config.checkRightMissing) return Option.none();
-
     const leftEntries = Object.entries(leftValue) as Array<[keyof object, unknown]>;
 
     for (const [key, value] of leftEntries) {
       const subPath = `${path}.${key}`;
       if (!(key in rightValue)) {
+        if (!config.checkRightMissing) continue;
         return Option.some({
           failType: FailureType.MISSING,
           leftValue: value,

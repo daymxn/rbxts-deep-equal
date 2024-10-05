@@ -10,7 +10,7 @@
 		"api:build": "npm run build",
 		"api:extract": "api-extractor run --local --verbose",
 		"api:update": "npx run-s api:build api:extract",
-		"api": "npx api:update",
+		"api": "npm run api:update",
 		"format": "npx eslint --fix",
 		"lint": "npm run format",
 		"lock": "npm i --package-lock-only",
