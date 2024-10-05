@@ -294,18 +294,18 @@ export declare interface DeepEqualConfig {
      */
     readonly customCheckers?: CustomCheckerMap<CheckerType>;
     /**
-     * Check for missing values from the left in comparison to the right.
+     * Check for missing values from the right in comparison to the left.
      *
      * Only really applicable to arrays and objects.
      *
      * @remarks
      * When comparing two arrays, `checkRightMissing` will also check if there
-     * are any values missing from the left array that are present in the right
+     * are any values missing from the right array that are present in the left
      * array.
      *
      * When comparing two objects (non array tables), `checkRightMissing` will also check
-     * if there are any properties missing from the left object that are present
-     * in the right object.
+     * if there are any properties missing from the right object that are present
+     * in the left object.
      *
      * @defaultValue `true`
      *

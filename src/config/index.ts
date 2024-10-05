@@ -79,18 +79,18 @@ export interface DeepEqualConfig {
   readonly customCheckers?: CustomCheckerMap<CheckerType>;
 
   /**
-   * Check for missing values from the left in comparison to the right.
+   * Check for missing values from the right in comparison to the left.
    *
    * Only really applicable to arrays and objects.
    *
    * @remarks
    * When comparing two arrays, `checkRightMissing` will also check if there
-   * are any values missing from the left array that are present in the right
+   * are any values missing from the right array that are present in the left
    * array.
    *
    * When comparing two objects (non array tables), `checkRightMissing` will also check
-   * if there are any properties missing from the left object that are present
-   * in the right object.
+   * if there are any properties missing from the right object that are present
+   * in the left object.
    *
    * @defaultValue `true`
    *
@@ -225,17 +225,14 @@ export function getDefaultDeepEqualConfig(): Partial<DeepEqualConfig> {
  * @public
  */
 export function mergeConfigs(...configs: (Partial<DeepEqualConfig> | undefined)[]): Partial<DeepEqualConfig> {
-  return configs.filterUndefined().reduce(
-    (acc, curr) => ({
-      ...acc,
-      ...curr,
-      ignore: [...(acc?.ignore ?? []), ...(curr?.ignore ?? [])],
-      referenceOnly: [...(acc?.referenceOnly ?? []), ...(curr?.referenceOnly ?? [])],
-      customCheckers: {
-        ...acc?.customCheckers,
-        ...curr?.customCheckers,
-      },
-    }),
-    {} as Partial<DeepEqualConfig>
-  );
+  return configs.filterUndefined().reduce((acc, curr) => ({
+    ...acc,
+    ...curr,
+    ignore: [...(acc?.ignore ?? []), ...(curr?.ignore ?? [])],
+    referenceOnly: [...(acc?.referenceOnly ?? []), ...(curr?.referenceOnly ?? [])],
+    customCheckers: {
+      ...acc?.customCheckers,
+      ...curr?.customCheckers,
+    },
+  }));
 }
